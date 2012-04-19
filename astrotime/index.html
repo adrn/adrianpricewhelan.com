@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<link rel="icon" type="image/png" href="images/favicon.ico" />
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		
+		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAMaalIvnmsfyyLNwOPwd2BRQKR6QU_hjDBSOdmizSib-hQe7myxRjEaJAGDf2ML-wxJ73j7koAr5apg"></script>
+		<script type="text/javascript" src="js/convert.js"></script>
+		<script type="text/javascript" src="js/misc.js"></script>
+		
+		<script type="text/javascript">
+			var lstDeg, lst;
+			
+			function successHandler(location) {
+				document.getElementById("longitude").value = (180.0 + location.coords.longitude).toFixed(7);
+				document.getElementById("latitude").value = (location.coords.latitude).toFixed(7);
+			}
+			
+			function errorHandler(error) {
+				// update a div element with error.message
+				document.getElementById("error").innerHTML = error.message;
+			}
+			
+			function getLatLon(is_iphone) {
+				
+				if (is_iphone) {
+					// If the user is using an iPhone, use getCurrentPosition() instead of
+					//  Google's API to find the current latitude and longitude
+					navigator.geolocation.getCurrentPosition(successHandler, errorHandler, {maximumAge:300000});
+				}
+				else {
+					// If the user is using a non-iPhone browser, use Google's location API to 
+					//	get their current location
+					if (google.loader.ClientLocation) {
+						document.getElementById("latitude").value = (google.loader.ClientLocation.latitude).toFixed(3);
+						document.getElementById("longitude").value = (180.0 + google.loader.ClientLocation.longitude).toFixed(3);
+					}
+					else {
+						document.getElementById("error").innerHTML = "Your location could not be determined!";
+					}
+				}
+				
+				return [document.getElementById("latitude").value, document.getElementById("longitude").value];
+				
+			}
+			
+			function main() {
+				
+				var agent = navigator.userAgent.toLowerCase();
+				var is_iphone = (agent.indexOf("iphone") != -1);
+				
+				if (document.getElementById("longitude").value == "") {
+					var latlon = getLatLon(is_iphone);
+					latN = latlon[0];
+					lonW = latlon[1];
+				}
+				else {
+					latN = document.getElementById("latitude").value;
+					lonW = document.getElementById("longitude").value;
+				}
+				
+				lstDec = getLST(lonW);
+				lstDeg = lstDec * 15.0;
+				lst = dec2sex(lstDec);
+				document.getElementById("lst").innerHTML = ""+pad2(lst[0])+":"+pad2(lst[1])+":"+pad2(lst[2]);
+				document.getElementById("lstDeg").innerHTML = lstDeg.toFixed(5) + "&deg;";
+				document.getElementById("lat").innerHTML = latN;
+				document.getElementById("lon").innerHTML = lonW;
+				
+			}
+			
+			function resetLatLon() {
+				document.getElementById("latitude").value = "";
+				document.getElementById("longitude").value = "";
+			}
+		</script>
+		<script type="application/x-javascript">
+			addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+			
+			function hideURLbar(){
+				window.scrollTo(0,1);
+			}
+		</script>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"> 
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<title>AstroTime</title>
+	</head>
+
+	<body onLoad="main(); setInterval('main()', 1002.78 );">
+		<br/><br/>
+		<div id="error" style="font-weight: bold; color: #ff0000;"></div>
+		<input type="hidden" name="latitude" id="latitude" value="" />
+		<input type="hidden" name="longitude" id="longitude" value="" />
+		
+		<center>
+			<div class="header">Local Sidereal Time</div><Br/>
+			<font class="latlon"><b>Latitude:</b> <span id="lat"></span><br/><b>Longitude:</b> <span id="lon"></span> </font>
+			<br/><br/>
+			<input type="button" class="fancy" value="Refresh Location" onClick="resetLatLon"#5C1C1F"();" />
+			<br/><br/>
+			<div id="lst" class='lst'></div>
+			<div id="lstDeg" class='lst'></div>
+		</center>
+	</body>
+</html>

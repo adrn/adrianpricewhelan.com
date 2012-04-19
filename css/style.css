@@ -1,0 +1,143 @@
+* {margin:0 auto;padding:0;} 
+
+html, body {height: 100%;}
+
+body {
+    background: #000;
+    background-size: 100%;
+    -moz-background-size: 100%;
+}
+
+header {
+    position: relative;
+    box-shadow: 0px 2px 3px 2px #111;
+    z-index: 2000;
+    clear:both;
+}
+
+footer {
+    text-align: center;
+    color: #aaa;
+    font-family: "Andale Mono";
+    background: #444;
+    position: relative;
+	margin-top: -160px; /* negative value of footer height */
+	height: 150px;
+	clear:both;
+	padding-top: 5px;
+	box-shadow: 0px 0px 5px 2px #111;
+}
+
+a {
+    text-decoration: underline;
+    color: #2E6693;
+}
+
+a:hover {
+    color: #3A82BA;
+}
+
+h3 {
+    color: #991720;
+    font-size: 18pt;
+    font-family: "Andale Mono";
+    text-shadow: 2px 2px 2px #111;
+}
+
+div.shadow {
+    border: 1px solid #000;
+    padding: 10px;
+    box-shadow: 2px 2px 2px 0px #111;
+    z-index: 5000;
+    font-size: 11pt;
+    font-weight: lighter;
+    color: #bcbcbc;
+}
+
+.padded {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+img {
+    -webkit-box-shadow: 0px 0px 5px 2px #111;
+    -moz-box-shadow: 0px 0px 5px 2px #111;
+    box-shadow: 0px 0px 5px 2px #111;
+}
+
+.name {
+    background: #000;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #ddd;
+    font-family: "Andale Mono";
+    font-weight: bolder;
+    font-size: 20pt;
+    text-shadow: 0px 1px 2px #222;
+}
+
+.redBox {
+    background-color: #ff0000;
+}
+
+a.menu {
+    font-family: "Andale Mono";
+    padding-left: 25px;
+    padding-right: 25px;
+    text-decoration: none;
+    color: #ddd;
+    font-size: 14pt;
+}
+
+div.menu {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: left;
+    text-align: center;
+    min-width: 900px;
+    border-bottom: 1px solid #444;
+
+    background: -webkit-linear-gradient(top, #000, #333);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4d4d4d), to(#000));
+
+    z-index: 200;
+}
+
+.page {
+    width: 100%;
+    /*min-height: 500px;*/
+    min-height: 100%;
+    background-color: #353535;
+    z-index: -1;
+}
+
+.content {
+    padding-top: 20px;
+    /*padding-bottom: 20px;*/
+    overflow:auto;
+	padding-bottom: 150px;
+    width: 65%;
+    min-width: 750px;
+    min-height: 600px;
+    color: #fff;
+    font-family: "Andale Mono";
+    font-size: 14pt;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+div.image {
+    text-align: center;
+}
+
+div.imageText {
+    position:relative;
+	top:-12px;
+	left: 225px;
+	font-size: 7pt;
+}
+
+.path {
+    color: #3A82BA;
+}

@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <title>What's up?</title>
+        
+        <script language="javascript" type="text/javascript" src="js/jquery.min.js"></script>
+        <script language="javascript" type="text/javascript" src="js/jquery.query.js"></script>
+        <script language="javascript" type="text/javascript" src="js/util.js"></script>
+        
+        <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+        <meta name = "viewport" content = "width=350px, initial-scale=0.1">
+        
+        <script type="text/javascript">
+            iPhoneCheck();
+        </script>
+    </head>
+    
+    <body class="day">
+        <div>
+            <h1>What's up?</h1>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="night" id="dayButton" value="Day Mode" style="display: none;" onClick="setParam('colors', 'day');" />
+            <input type="button" class="day" id="nightButton" value="Night Mode" style="display: inline;" onClick="setParam('colors', 'night');" />
+            
+            <br/><br/>
+            
+            <table class="day" align="center">
+                <!-- When click one, a list appears that lets the user drag and drop stars to a list,
+                    or allows them to enter things into a search to be resolved by NED or SIMBAD. Then,
+                    with a list of objects (RA/Decs), it uses the location and time to figure out where
+                    the objects are. -->
+                <!-- Or, when click title, pops up a list of objects ranked by people (you can "Like"
+                    an object and it puts the highest liked objects at top). Then it shows where to look
+                    for these objects. -->
+                <!-- Link to photos of object (Google image?), allow users to upload images -->
+                <tr class="objectTypeSelect">
+                    <td onClick="setParam('objects', 'stars');">Stars</td>
+                    <td onClick="setParam('objects', 'solarSystem');">Solar System</td>
+                    <td onClick="setParam('objects', 'deepSpace');">Deep Space</td>
+                    <!--<td onMouseOver="this.className='over';" onMouseOut="this.className=null;">Custom</td>-->
+                </tr>
+            </table>
+            
+            <br/>
+            
+            <table class="day" align="center">
+                <tr id="stars" class="objectListRow">
+                    <td colspan="5">
+                        <table class="objectList" align="center">
+                            <thead>
+                                <tr>
+                                    <td>Object Name</td>
+                                    <td>Coordinates</td>
+                                    <td>Rise Time</td>
+                                    <td>Set Time</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mizar</td>
+                                    <td>..</td>
+                                    <td>6:17 PM</td>
+                                    <td>6:14 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>Alioth</td>
+                                    <td>..</td>
+                                    <td>3:17 PM</td>
+                                    <td>3:14 AM</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                
+                <tr id="solarSystem" class="objectListRow">
+                    <td colspan="5">
+                        Jupiter<br/>Venus
+                    </td>
+                </tr>
+                
+                <tr id="deepSpace" class="objectListRow">
+                    <td colspan="5">
+                        Andromeda Galaxy (M31)<br/>Ring Nebule (M87)
+                    </td>
+                </tr>
+            </table>
+
+            <!--<p class="day">
+            </p>-->
+        </div>
+        <script type="text/javascript">
+            if ($.urlParam('objects') != null) {
+                showObjects($.urlParam('objects'));
+            }
+            if ($.urlParam('colors') == 'night') {
+                dayToNight();
+            } else {
+                nightToDay();
+            }
+        </script>
+    </body>
+</html>

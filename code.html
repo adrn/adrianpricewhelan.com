@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>adrn</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+        <script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+        <script type="text/javascript" src="js/apw.js"></script>
+        
+        <script type="text/javascript">
+            var blink = function(){
+                $('#blinker').toggle();
+            };
+            $(document).ready(function() {
+                setInterval(blink, 500);
+            });
+        </script>
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-11936482-10']);
+          _gaq.push(['_trackPageview']);
+    
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+    
+        </script>
+    </head>
+    
+    <body>
+        <header>
+            <div class="menu">
+                <a class='menu' href="index.html" onmouseover="changePath('cd ~');" onmouseout="changePath('');"><u>H</u>ome</a>
+                <a class='menu' href="science.html" onmouseover="changePath('cd science');" onmouseout="changePath('');"><u>S</u>cience</a>
+                <a class='menu' href="code.html" onmouseover="changePath('cd code');" onmouseout="changePath('');"><u>C</u>ode</a>
+                <a class='menu' href="music.html" onmouseover="changePath('cd music');" onmouseout="changePath('');"><u>M</u>usic</a>
+                <a class='menu' href="images.html" onmouseover="changePath('cd images');" onmouseout="changePath('');"><u>I</u>mages</a>
+                <a class='menu' href="docs/adrian_cv.pdf" onmouseover="changePath('open cv.pdf');" onmouseout="changePath('');">C<u>V</u></a>
+                <a class='menu' href="links.html" onmouseover="changePath('cd links');" onmouseout="changePath('');"><u>L</u>inks</a>
+            </div>
+            <div class="name">
+                <span style="color: ff0000;">adrian</span> <span class="path">[~/code] % </span>
+                <span id="command"></span><span id="blinker" class='redBox'>&nbsp;</span>
+            </div>
+        </header>
+        
+        <section class="page">
+            <div class="content">
+                <!-- PAGE CONTENT GOES HERE -->
+                <h3>General</h3>
+                <div class="shadow">
+                    <a href="https://github.com/adrn/apwlib/" target="_blank">apwlib</a><br/>
+                    This is a collection of code that I've written in Python that I use in multiple projects. It's mostly relevant to Astronomy (in fact, I think it is currently <i>just</i> Astronomy-related), but the plan is to add other code as well. Feel free to report bugs, add suggestions, and email me if you'd like to contribute. Currently, there is no official documentation (although I expect that to change too), but some things you might find useful:<Br/><br/>
+                    &nbsp;&nbsp;<b style="color: red;">-</b> Date / coordinate conversion (MJD to Gregorian, RA/Dec to Galactic, etc.) (apwlib.convert, apwlib.geometry)<br/>
+                    &nbsp;&nbsp;<b style="color: red;">-</b> Plotting spectra by supplying a list of filenames, or a list of tuples in the format (wavelength grid, flux) (apwlib.spec.Plot)<br/>
+                    &nbsp;&nbsp;<b style="color: red;">-</b> Overlaying spectral lines on a matplotlib plot (apwlib.spec.Lines)<br/>
+                    &nbsp;&nbsp;<b style="color: red;">-</b> A wrapper around Python's datetime.datetime object that has mjd and jd attributes, and other astronomically useful times (apwlib.astrodatetime)
+                </div>
+                <br/>
+                <hr color='#242424' size='1' width='50%' />
+                <h3>SDSS</h3>
+                <div class="shadow">
+                    - Coming soon!
+                    <p class='padded'>
+                        
+                    </p>
+                </div>                
+            </div>
+        </section>
+    
+    <a href="http://github.com/adrn"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
+    
+    </body>
+
+</html>

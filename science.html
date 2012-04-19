@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>adrn</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+        <script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+        <script type="text/javascript" src="js/apw.js"></script>
+        
+        <script type="text/javascript">
+            var blink = function(){
+                $('#blinker').toggle();
+            };
+            $(document).ready(function() {
+                setInterval(blink, 500);
+            });
+        </script>
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-11936482-10']);
+          _gaq.push(['_trackPageview']);
+    
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+    
+        </script>
+    </head>
+    
+    <body>
+        <header>
+            <div class="menu">
+                <a class='menu' href="index.html" onmouseover="changePath('cd ~');" onmouseout="changePath('');"><u>H</u>ome</a>
+                <a class='menu' href="science.html" onmouseover="changePath('cd science');" onmouseout="changePath('');"><u>S</u>cience</a>
+                <a class='menu' href="code.html" onmouseover="changePath('cd code');" onmouseout="changePath('');"><u>C</u>ode</a>
+                <a class='menu' href="music.html" onmouseover="changePath('cd music');" onmouseout="changePath('');"><u>M</u>usic</a>
+                <a class='menu' href="images.html" onmouseover="changePath('cd images');" onmouseout="changePath('');"><u>I</u>mages</a>
+                <a class='menu' href="docs/adrian_cv.pdf" onmouseover="changePath('open cv.pdf');" onmouseout="changePath('');">C<u>V</u></a>
+                <a class='menu' href="links.html" onmouseover="changePath('cd links');" onmouseout="changePath('');"><u>L</u>inks</a>
+            </div>
+            <div class="name">
+                <span style="color: ff0000;">adrian</span> <span class="path">[~/science] % </span>
+                <span id="command"></span><span id="blinker" class='redBox'>&nbsp;</span>
+            </div>
+        </header>
+        
+        <section class="page">
+            <div class="content">
+                <!-- PAGE CONTENT GOES HERE -->
+                <h3>Publications</h3>
+                <div class="shadow">
+                    - Adrian M. Price-Whelan & David W. Hogg; 2010. "What bandwidth do I need for my image?" <a href="http://arxiv.org/abs/0910.2375" onmouseover="changePath('open http://arxiv.org/abs/0910.2375');" onmouseout="changePath('');">ArXiv:0910.2375</a>, PASP Volume 122, issue 888, pp.207-214 in press<br/><br/>
+                    - Michael R. Blanton, Eyal Kazin, Demitri Muna, Benjamin A. Weaver, Adrian Price-Whelan; 2011. "Improved background subtraction for the Sloan Digital Sky Survey images" <a href="http://arxiv.org/abs/1105.1960" onmouseover="changePath('open http://arxiv.org/abs/1105.1960');" onmouseout="changePath('');">ArXiv:1105.1960</a>, AJ in press<br/><br/>
+                    - SDSS-III Collaboration; 2011. "The Eighth Data Release of the Sloan Digital Sky Survey: First Data from SDSS-III" <a href="http://arxiv.org/abs/1101.1559" onmouseover="changePath('open http://arxiv.org/abs/1101.1559');" onmouseout="changePath('');">ArXiv:1101.1559</a>, AJ in press<br/><br/>
+                    - Eisenstein, D. J. et al.; 2011. "SDSS-III: Massive Spectroscopic Surveys of the Distant Universe, the Milky Way Galaxy, and Extra-Solar Planetary Systems" <a href="http://arxiv.org/abs/1101.1529 " onmouseover="changePath('open http://arxiv.org/abs/1101.1529 ');" onmouseout="changePath('');">ArXiv:1101.1529</a>, AJ in press<br/><br/>
+                </div>
+                <br/>
+                <hr color='#242424' size='1' width='50%' />
+                <h3>Things I'm interested in:</h3>
+                <div class="shadow">
+                    - Gravitational Microlensing (with the Palomar Transient Factory)<br/>
+                    - Galaxy evolution<br/>
+                    - Supermassive Black Hole Binaries<br/>
+                    - Large astronomical surveys / statistical inference with large data sets<br/>
+                    <p class='padded'>
+                        
+                    </p>
+                </div>
+                <br/>
+                <hr color='#242424' size='1' width='50%' />
+                <h3>Collaborations</h3>
+                <div class="shadow">
+                    - <a href="http://howdy.physics.nyu.edu/index.php/Measuring_Gravitational_Potentials_Using_Tidal_Streams">Measuring Gravitational Potentials Using Tidal Streams</a><br/>
+                    - Multi-epoch Spectroscopic and Photometric Measurements of TP-AGB Stars<br/>
+                    <br/>
+                    <u>People</u>:<br/>
+                    David Hogg (NYU)<br/>
+                    Mike Blanton (NYU)<br/>
+                    Demitri Muna (NYU)<br/>
+                </div>
+                
+            </div>
+        </section>
+        
+    </body>
+
+</html>

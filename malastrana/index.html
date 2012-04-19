@@ -1,0 +1,151 @@
+<html>
+    <head>
+        <title>mala_strana</title>
+        <meta charset="utf-8" />
+        
+        <style>
+            body {
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: 70%;
+                font-family: Courier;
+                font-size: 24pt;
+                letter-spacing:3px
+            }
+            
+            div#loading {
+                color: #444;
+            }
+            
+            div#menuDiv {
+                font-size: 20pt;
+                text-shadow: 0px 0px 7px #000;
+                color: transparent;
+                font-weight: bold;
+                display: none;
+            }
+            
+            div#textDiv {
+                text-shadow: 0px 0px 5px #000;
+                font-size: 30pt;
+                /*color: #dd0000;*/
+                color: transparent;
+                font-weight: bold;
+                display: none;
+            }
+            
+            div#email {
+                font-size: 20pt;
+                text-shadow: 2px 1px 1px #222;
+                font-weight: bold;
+                color: #aa0000;
+            }
+            
+            a:link, a:visited, a:active  {
+                text-decoration:none;
+                text-shadow: 0px 0px 4px #000;
+                color: transparent;
+                font-weight: bold;
+            }
+            a:hover {
+                text-decoration:underline;
+                text-shadow: 0px 0px 2px #000;
+                color: transparent;
+                font-weight: bold;
+            }
+            
+        </style>
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script type="text/javascript">
+            
+            function startTV() {
+                var slides = [ "images/noise1.png",
+                               "images/noise2.png",
+                               "images/noise3.png",
+                               "images/noise4.png" // ...
+                             ],
+                    index = 0,
+                    timer = 0;
+            
+                // Show the first slide
+                showNextSlide();
+            
+                // Show "next" slide every five seconds
+                window.timer = setInterval(showNextSlide, 70);
+            
+                // The function we call to show the "next" slide    
+                function showNextSlide() {
+                    if (index >= slides.length) {
+                        index = 0;
+                    }
+                    //document.getElementById('tvStatic').src = slides[index++];
+                    document.body.background = slides[index++];
+                }
+            }
+            
+            jQuery.fn.center = function (divisor) {
+                this.css("position","absolute");
+                this.css("top", (($(window).height() - this.outerHeight()) / divisor) + $(window).scrollTop() + "px");
+                this.css("left", (($(window).width() - this.outerWidth()) / 2) + $(window).scrollLeft() + "px");
+                return this;
+            }
+            
+            window.onload = function() {
+                $("#loading").css("display", "none");
+                startTV();
+                $("#textDiv").center(4);
+                $("#menuDiv").center(2);
+                document.body.style.cursor = "pointer";
+            };
+            
+            window.onresize = function() {
+                $("#textDiv").center(4);
+            }
+            
+            function toggleTV() {
+                if (document.body.background == "images/test_pattern.png") {
+                    startTV();
+                    $("#textDiv").css("display", "none");
+                    $("#menuDiv").css("display", "none");
+                    document.body.style.cursor = "pointer";
+                }
+                else {
+                    clearInterval(window.timer);
+                    $("#textDiv").css("display", "block");
+                    $("#menuDiv").css("display", "block");
+                    document.body.background = "images/test_pattern.png";
+                    document.body.style.cursor = "default";
+                }
+            }
+            
+        </script>
+    </head>
+
+<body bgcolor="#000000" onClick="toggleTV();">
+    <div id="loading" align="center">
+        <font>Loading...</font><br/>
+        <img src="images/loading.gif" />
+    </div>
+    <img id="tvStatic" onClick="toggleTV();" style="display: none;" src="images/noise1.png" height="95%" />
+    <img id="tvPattern" onClick="toggleTV();" style="display: none;" src="images/test_pattern.png" height="95%" />
+    <img src="images/noise2.png" style="display: none;" />
+    <img src="images/noise3.png" style="display: none;" />
+    <img src="images/noise4.png" style="display: none;" />
+    
+    <div id="textDiv">
+        <h1>mala_strana</h1><br/>
+    </div>
+    
+    <div id="menuDiv">
+        >>> <a href="http://www.facebook.com/pages/Mala-Strana/145859735431160">facebook</a>
+        >>> <a href="http://malastrana.bandcamp.com">bandcamp</a>
+        >>> <a href="">shows</a> <<<
+    </div>
+    
+    <!--<div id="email">
+        malastranaband at gmail.com
+    </div>-->
+    
+</body>
+</html>

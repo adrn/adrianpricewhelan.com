@@ -1,0 +1,39 @@
+html {
+	background: #222222;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	text-align: center;
+	width: 480px;
+	height: 640px;
+	margin: 0 auto;
+	padding: 0;
+	background: #510200;
+	font-size: 30px;
+	color: #D30600;
+	font-family:"Lucida Grande","Lucida Sans Unicode",geneva,verdana,sans-serif;
+}
+
+.header {
+	font-size: 42px;
+	font-weight: bold;
+}
+
+.lst {
+	font-weight: bold; 
+	font-size: 70px;
+}
+
+.fancy {
+    background: #50514F;
+
+    padding: 9px;
+    font-family:"Lucida Grande","Lucida Sans Unicode",geneva,verdana,sans-serif;
+    font-size: 30px;
+    color: #C3C6C1;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}

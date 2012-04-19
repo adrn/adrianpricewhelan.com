@@ -1,0 +1,53 @@
+<html>
+<head>
+<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+<script src="/js/galleria/galleria-1.2.5.min.js"></script>
+<script src="/js/galleria/themes/classic/galleria.classic.min.js"></script>
+</head>
+
+<body>
+
+<!--<script type="text/javascript">
+    // Our very special jQuery JSON fucntion call to Flickr, gets details
+    // of the most recent 20 images
+    
+    function displayImages(data) {
+        // Start putting together the HTML string
+        var htmlString = "";
+        
+        // Now start cycling through our array of Flickr photo details
+        $.each(data, function(i,item){
+            
+            $('#testTable > tbody:last').append('<tr>...</tr><tr>...</tr>');
+            // Here's where we piece together the HTML
+            htmlString += '<li><a class="lightbox" href="' + item.link + '">';
+            htmlString += '<img ' + ' src="' + item.link;
+            htmlString += '" />';
+            htmlString += '</a></li>';
+        
+        });
+        
+        // Pop our HTML in the #images DIV
+        $('#images').html(htmlString);
+        
+        // Close down the JSON function call
+    }
+    
+    $.getJSON("http://www.adrianpricewhelan.com/cgi/images/sdss", displayImages);
+    
+</script>-->
+
+<div id="galleria"></div>
+<script>
+    $.getJSON("http://www.adrianpricewhelan.com/cgi/images/sdss", function(data) {
+        $('#galleria').galleria({
+            dataSource: data,
+            width: 600,
+            height: 500
+        });
+    });
+</script>
+
+</body>
+
+</html>
