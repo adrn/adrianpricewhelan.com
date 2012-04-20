@@ -114,6 +114,15 @@ April 20: Meeting 1
         >>> a /= 17
         >>> a -= 4
 
+*   Comparison operators are ``>``, ``<``, ``>=``, ``<=``, ``==``, and ``!=``
+        
+        >>> a = 11
+        >>> b = 14
+        >>> a == b
+        False
+        >>> b > a
+        True
+
 *   Logical operators are words, not symbols!
         
         >>> a = 1
@@ -259,6 +268,14 @@ April 20: Meeting 1
         what the slice operator does -- it creates a new object based on a subset of the 
         object you are slicing.
         
+        Python's slicing also understands negative indices.
+            
+            >>> a = [1, 2, 3]
+            >>> a[:-1]
+            [1, 2]
+        
+        The above example means *"slice this list up to but not including the last item"*.
+        
         One other useful operator for sequences is the ``in`` operator. This will check
         to see if a given object is in the sequence you specify:
         
@@ -273,16 +290,182 @@ April 20: Meeting 1
             >>> len(a)
             3
 
-*   if statements and loops (white space not curly braces!)
+*   Dictionary objects (``dict``) are a *mapping type*, and in other languages are sometimes referred
+    to as "associative arrays". Remember that sequences are indexed by integer numbers,
+    but dictionaries are indexed by a generalization of this idea called **keys**. The one
+    constraint is that keys must be *immutable*, unique objects (you can't have two of the
+    same key). A dictionary can be thought of as an unordered set of *key:value* pairs. Let's
+    do an example.
     
-        TODO: fill this in
-
-*   Comments
+    With a list, we can insert and append objects to the list, but ultimately the location
+    of the object is specified by an integer-valued index:
+        
+        >>> a = ["Ecky", "Ecky", "Ecky", "Fuhclang", "Zoom", "Boing!"]
+        >>> a[3]
+        'Fuhclang'
     
-        TODO: fill this i
+    This means you have to keep track of what object is at a given index, and this can be
+    annoying if you are inserting, removing, and appending objects dynamically. To create
+    a dictionary, you use a curly brace, and specify *key:value* pairs:
+        
+        >>> gradSchoolYear = {"Adrian" : 1, "Munier" : 2, "Brandon" : 2, "Jeff" : 3}
+        >>> gradSchoolYear["Jeff"]
+        3
+    
+    You can also dynamically add or remove key:value pairs. To delete a pair, we can use
+    the ``del`` operator
+        
+        >>> gradSchoolYear["Lauren"] = 2
+        >>> del gradSchoolYear["Brandon"]
+        >>> gradSchoolYear["Brandon"]
+        Traceback (most recent call last):
+          File "<stdin>", line 1, in <module>
+        KeyError: 'Brandon'
 
-*   For any object in Python, there is a built-in function ``dir()`` that will return
-    the *namespace* of the object. TODO: explain namespace and dir
+    You can check to see what keys or values a dictionary has by using these functions:
+        
+        >>> gradSchoolYear.keys()
+        dict_keys(['Lauren', 'Jeff', 'Munier', 'Adrian'])
+        >>> gradSchoolYear.values()
+        dict_values([2, 3, 2, 1])
+    
+    <div class="note">In Python 2, these functions just return list objects, but in Python 3
+        they return special list-like objects dict_keys and dict_values.
+    </div>
+
+*   if statements
+    
+    *   If statements allow for conditional execution of code. There are no "case" or
+        "switch" statements -- all conditional execution is done with ``if`` blocks. I
+        find it's easiest to start with an example in Python, because the code itself
+        is often very close to English! Remember also that there are no brackets or 
+        braces (or semicolons!) in Python, so you must use **indents**.
+        
+            >>> cheeseString = "Norwegian Jarlsberg"
+            >>> if "Jarlsberg" in cheeseString:
+            ...     print("No.")
+            ... elif "Leicester" in cheeseString:
+            ...     print("No.")
+            ... else:
+            ...     print("No.")
+            ... 
+            No.
+        
+        Python evaluates each conditional statement to see if any evaluate to True, at
+        which point the interpreter enters the block of code below that expression. If
+        none of the conditions are met, it will enter the ``else`` block (if specified).
+
+*   Python has both ``while`` and ``for`` loops, but I use ``for`` loops much more
+    frequently. 
+    
+    *   For loops utilize the keywords ``for`` and ``in`` to iterate over the items in
+        a sequence, rather than a progression of numbers. This differs from other 
+        languages (e.g., C), but is very powerful. As I mentioned before, sequence-type
+        objects are **iterable**, so we can loop directly over their contents:
+            
+            >>> professors = ["Greg", "Mary", "Arlin", "David"] # etc...
+            >>> for professor in professors:
+            ...     print(professor)
+            ... 
+            Greg
+            Mary
+            Arlin
+            David
+        
+        This is nice because you don't have to deal with indices (if you don't want to)!
+        But what if you want to loop over some function N times? Python provides a built-in
+        function called ``range()`` that generates arithmetic progressions of numbers. With
+        a single argument, e.g. ``range(10)``, you will get a sequence of numbers starting
+        with 0, of length 10.
+            
+            >>> for num in range(10):
+            ...     print(num)
+            ... 
+            0
+            1
+            2
+            3
+            4
+            5
+            6
+            7
+            8
+            9
+        
+        But you can also specify an start and end point:
+            
+            >>> for num in range(10, 25):
+            ...     print(num)
+            ... 
+            10
+            11
+            12
+            13
+            14
+            15
+            16
+            17
+            18
+            19
+            20
+            21
+            22
+            23
+            24
+        
+        As well as an interval (increment):
+            
+            >>> for num in range(10, 50, 4):
+            ...     print(num)
+            ... 
+            10
+            14
+            18
+            22
+            26
+            30
+            34
+            38
+            42
+            46
+        
+        Sometimes it's handy to have both an index and the value of each item in a list.
+        Another built-in function, called ``enumerate()``, will allow you to do just that.
+        
+            >>> professors = ["Greg", "Mary", "Arlin", "David"] # etc...
+            >>> for index, professor in enumerate(professors):
+            ...     print(index, professor)
+            ... 
+            0 Greg
+            1 Mary
+            2 Arlin
+            3 David
+    
+    *   Looping through dictionaries is also easy with the function ``.items()``:
+            
+            >>> gradSchoolYear = {"Adrian" : 1, "Munier" : 2, "Brandon" : 2, "Jeff" : 3}
+            >>> for name, year in gradSchoolYear.items():
+            ...     print(name, year)
+            ... 
+            Brandon 2
+            Jeff 3
+            Munier 2
+            Adrian 1
+        
+*   Single-line or in-line comments in Python are denoted with the hash symbol, ``#``, 
+    for example:
+    
+        >>> a = 1 # This is a comment!
+    
+    To write multi-line comments, you use three quotes (single or double):
+        
+        """ Ah! We do have some Camembert,
+            but it's a bit runny...
+        """
+
+*   For any object in Python, there is a built-in function ``dir()`` that will list an
+    objects attributes and functions. In particular, this function returns the **namespace**
+    of a given object, but we will come back to this later.
     Other built-in functions [are listed here](http://docs.python.org/library/functions.html).
 
 *   Python code is not (ish) checked at compile time. One consequence of this 
