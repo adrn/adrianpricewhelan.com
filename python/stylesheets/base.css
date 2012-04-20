@@ -368,7 +368,7 @@
     
     code {
         -webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;
-        background-color: rgba(212,251,255,0.4);
+        background-color: rgba(255,219,248,0.7);
         padding: 2px;
         font-family:Monaco, Andale Mono, Courier New, monospace;font-size:12px;
         border: 1px solid #dedede;
@@ -391,7 +391,7 @@
         font-family:Monaco, Andale Mono, Courier New, monospace;font-size:12px;
         border: 1px solid #ccc;
         -webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;
-        background-color: rgba(212,251,255,0.4);
+        background-color: rgba(212,251,255,0.45);
         
         margin-left: 20px;
         margin-top: 5px;

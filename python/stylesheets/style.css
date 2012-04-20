@@ -6,6 +6,25 @@
     float: left;
 }
 
+.note {
+    font-size: 110%;
+    color: #666;
+    -webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;
+    background-color: rgba(255,235,179,0.7);
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #dedede;
+    font-style: italic;
+    text-align: center;
+}
+
+.note > pre {
+    background: none;
+    border: 0px;
+    font-style: none;
+    text-align: center;
+}
+
 /* ------------------------------------------
 CSS3 GITHUB BUTTONS (Nicolas Gallagher)
 Licensed under Unlicense 
