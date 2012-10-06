@@ -1,74 +1,56 @@
 <html>
     <head>
         <title>adrn</title>
+        <link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
-        <script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
-        <script type="text/javascript" src="js/apw.js"></script>
-        
-        <script type="text/javascript">
-            var blink = function(){
-                $('#blinker').toggle();
-            };
-            $(document).ready(function() {
-                setInterval(blink, 500);
-            });
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	
+        <script type="text/javascript">    
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-11936482-10']);
+            _gaq.push(['_trackPageview']);
+            
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
         </script>
 	
-	<script type="text/javascript">
-
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-11936482-10']);
-	  _gaq.push(['_trackPageview']);
-
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-
-	</script>
     </head>
     
-    <body style="overflow: hidden;">
+    <body>
         <header>
-            <div class="menu">
-                <a class='menu' href="index.html" onmouseover="changePath('cd ~');" onmouseout="changePath('');"><u>H</u>ome</a>
-                <a class='menu' href="science.html" onmouseover="changePath('cd science');" onmouseout="changePath('');"><u>S</u>cience</a>
-                <a class='menu' href="code.html" onmouseover="changePath('cd code');" onmouseout="changePath('');"><u>C</u>ode</a>
-                <a class='menu' href="music.html" onmouseover="changePath('cd music');" onmouseout="changePath('');"><u>M</u>usic</a>
+            <ul class="menu" id="menu_list">
+                <li id="name">Adrian Price-Whelan</li>
+                <li><a class='menu_item' href="index.html">Home</a></li>
+                <li><a class='menu_item' href="projects.html">Projects</a></li>
+                <li><a class='menu_item' href="links.html">Links</a></li>
+                <li></li>
+                <!--<a class='menu' href="music.html" onmouseover="changePath('cd music');" onmouseout="changePath('');"><u>M</u>usic</a>
                 <a class='menu' href="images.html" onmouseover="changePath('cd images');" onmouseout="changePath('');"><u>I</u>mages</a>
-                <a class='menu' href="docs/adrian_cv.pdf" onmouseover="changePath('open cv.pdf');" onmouseout="changePath('');">C<u>V</u></a>
-                <a class='menu' href="links.html" onmouseover="changePath('cd links');" onmouseout="changePath('');"><u>L</u>inks</a>
-            </div>
-            <div class="name">
-                <span style="color: ff0000;">adrian</span> <span class="path">[~/] % </span>
-                <span id="command"></span><span id="blinker" class='redBox'>&nbsp;</span>
-            </div>
+                <a class='menu' href="docs/adrian_cv.pdf">CV</a>-->
+            </ul>
         </header>
         
-        <section class="page">
-            <div class="content" style="overflow: hidden;">
-                <!-- PAGE CONTENT GOES HERE -->
-                
-                <div class="shadow"><a href="images/adrian.png" onmouseover="changePath('display adrian.png');" onmouseout="changePath('');">Adrian Price-Whelan</a> is a graduate student at Columbia University's <a href="http://www.astro.columbia.edu/" onmouseover="changePath('open http://www.astro.columbia.edu/');" onmouseout="changePath('');">Department of Astronomy</a>. 
-                Before that, he worked for the Sloan Digital Sky Survey (<a href="http://sdss3.org" onmouseover="changePath('open http://sdss3.org');" onmouseout="changePath('');">SDSS</a>) at NYU, and earned an Honors B.A. in Physics from <a href="http://nyu.edu" onmouseover="changePath('open http://nyu.edu');" onmouseout="changePath('');">NYU</a>. 
-                When Adrian's not doing <a href="science.html" onmouseover="changePath('cd science');" onmouseout="changePath('');">research</a> or writing <a href="code.html" onmouseover="changePath('cd code');" onmouseout="changePath('');">code</a>, he's probably playing <a href="music.html" onmouseover="changePath('cd music');" onmouseout="changePath('');">music</a>, riding his <a href="images/bike.png" onmouseover="changePath('display bike.png');" onmouseout="changePath('');">bike</a>, or cooking.</div>
-                <br/><Br/>
-                <div class="image">
-                    <img src="images/SDSS_milky.png" height="400px" />
-                    <div class="imageText">
-                        &copy; 2010 Adrian Price-Whelan.
-                    </div>
+        <section class="content">
+            <div class="shadow"><a href="images/adrian.png" onmouseover="changePath('display adrian.png');" onmouseout="changePath('');">Adrian Price-Whelan</a> is a graduate student at Columbia University's <a href="http://www.astro.columbia.edu/" onmouseover="changePath('open http://www.astro.columbia.edu/');" onmouseout="changePath('');">Department of Astronomy</a>. 
+            Before that, he worked for the Sloan Digital Sky Survey (<a href="http://sdss3.org" onmouseover="changePath('open http://sdss3.org');" onmouseout="changePath('');">SDSS</a>) at NYU, and earned an Honors B.A. in Physics from <a href="http://nyu.edu" onmouseover="changePath('open http://nyu.edu');" onmouseout="changePath('');">NYU</a>. 
+            When Adrian's not doing <a href="science.html" onmouseover="changePath('cd science');" onmouseout="changePath('');">research</a> or writing <a href="code.html" onmouseover="changePath('cd code');" onmouseout="changePath('');">code</a>, he's probably playing <a href="music.html" onmouseover="changePath('cd music');" onmouseout="changePath('');">music</a>, riding his <a href="images/bike.png" onmouseover="changePath('display bike.png');" onmouseout="changePath('');">bike</a>, or cooking.</div>
+            <br/><Br/>
+            <div class="image">
+                <img src="images/SDSS_milky.png" height="400px" />
+                <div class="imageText">
+                    &copy; 2010 Adrian Price-Whelan.
                 </div>
-                <center>
-                <!-- Twitter -->
-                <a href="http://twitter.com/astrodrian" class="twitter-follow-button" data-button="grey" data-text-color="#FFFFFF" data-link-color="#00AEFF" data-show-count="false">@astrodrian on Twitter</a>
-                
-                <!-- Facebook -->
-                <!--<a href="https://www.facebook.com/adrianpw" target="_TOP" title="Adrian Price-Whelan">Adrian Price-Whelan on Facebook</a>-->
-                </center>
-                
             </div>
+            <center>
+            <!-- Twitter -->
+            <a href="http://twitter.com/astrodrian" class="twitter-follow-button" data-button="grey" data-text-color="#FFFFFF" data-link-color="#00AEFF" data-show-count="false">@astrodrian on Twitter</a>
+            
+            <!-- Facebook -->
+            <!--<a href="https://www.facebook.com/adrianpw" target="_TOP" title="Adrian Price-Whelan">Adrian Price-Whelan on Facebook</a>-->
+            </center>
         </section>
         
         <footer style="font-size:10pt; bottom: 0px;">
