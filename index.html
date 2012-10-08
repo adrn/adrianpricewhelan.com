@@ -2,8 +2,22 @@
     <head>
         <title>adrn</title>
         <link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/colorbrewer.css" />
+        
+        <!--
+        For production:
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="http://d3js.org/d3.v2.js"></script>
+        -->
+        
+        <!--
+        For development:
+        -->
+        <script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+        <script type="text/javascript" src="js/d3.v2.min.js"></script>
+        
         <script type="text/javascript" src="js/galaxy.js"></script>
+        <script type="text/javascript" src="js/colorbrewer.js"></script>
 	
         <script type="text/javascript">    
             var _gaq = _gaq || [];
@@ -24,94 +38,98 @@
     </body>
     
     <script type="text/javascript">
-        (function() {
-            var pi = 3.1415926;
-            var Nstars = 2000;
-            
-            var canvas = document.getElementById('bgcanvas'),
-                context = canvas.getContext('2d');
-            
-            // resize the canvas to fill browser window dynamically
-            //window.addEventListener('resize', resizeCanvas, false);
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            // Create a new Galaxy in the center of the screen
-            var galaxy = new Galaxy(canvas.width/2., canvas.height/2., window.innerWidth/4.);
-            
-            // Create an array of random initial positions and velocities for N particles (stars)
-            var init_pos = new Array(),
-                init_vel = new Array();
-            
-            // Put in a disk
-            var gg = 0;
-            while (gg < Nstars) {
-                // choose stars to start with random radii around the center
-                init_r = Math.random()*galaxy.size + galaxy.size/5.;
-                //init_r = galaxy.size;
-                init_phi = Math.random()*2.*pi;
+        var color_scaler = d3.scale.ordinal()
+                .domain([0, 2.])
+                .range(colorbrewer.Blues);
                 
-                init_pos.push(galaxy.rphi_to_xy(init_r, init_phi));
-                
-                var mag_v = 1.4,
-                    vx = -mag_v * Math.sin(init_phi) + ((Math.random()-0.5)/4.),
-                    vy = mag_v * Math.cos(init_phi) + ((Math.random()-0.5)/4.);
-                init_vel.push([vx, vy]);
-                gg++;
-            }
+        var pi = 3.1415926;
+        var Nstars = 2000;
+        
+        var canvas = document.getElementById('bgcanvas'),
+            context = canvas.getContext('2d');
+        
+        // resize the canvas to fill browser window dynamically
+        //window.addEventListener('resize', resizeCanvas, false);
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        // Create a new Galaxy in the center of the screen
+        var galaxy = new Galaxy(canvas.width/2., canvas.height/2., window.innerWidth/4.);
+        
+        // Create an array of random initial positions and velocities for N particles (stars)
+        var init_pos = new Array(),
+            init_vel = new Array();
+        
+        // Put in a disk
+        var gg = 0;
+        while (gg < Nstars) {
+            // choose stars to start with random radii around the center
+            init_r = Math.random()*galaxy.size + galaxy.size/5.;
+            //init_r = galaxy.size;
+            init_phi = Math.random()*2.*pi;
             
-            // Put in a bulge!
-            var gg = 0;
-            while (gg < Nstars/2) {
-                // choose stars to start with random radii around the center
-                init_r = Math.random()*galaxy.size/4.;
-                init_phi = Math.random()*2.*pi;
-                
-                init_pos.push(galaxy.rphi_to_xy(init_r, init_phi));
-                
-                var vx = Math.sqrt(2.*Math.random()) - 1.,
-                    vy = Math.sqrt(2.*Math.random()) - 1.;
+            init_pos.push(galaxy.rphi_to_xy(init_r, init_phi));
+            
+            var mag_v = 1.4,
+                vx = mag_v * Math.sin(init_phi) + ((Math.random()-0.5)/4.),
+                vy = mag_v * Math.cos(init_phi) + ((Math.random()-0.5)/4.);
+            init_vel.push([vx, vy]);
+            gg++;
+        }
+        
+        // Put in a bulge!
+        var gg = 0;
+        while (gg < Nstars/2) {
+            // choose stars to start with random radii around the center
+            init_r = Math.random()*galaxy.size/4.;
+            init_phi = Math.random()*2.*pi;
+            
+            init_pos.push(galaxy.rphi_to_xy(init_r, init_phi));
+            
+            var vx = Math.sqrt(2.*Math.random()) - 1.,
+                vy = Math.sqrt(2.*Math.random()) - 1.;
 
-                init_vel.push([vx, vy]);
-                gg++;
-            }
+            init_vel.push([vx, vy]);
+            gg++;
+        }
+        
+        var pos = init_pos,
+            vel = init_vel;
+        
+        draw(init_pos, init_vel);
             
-            var pos = init_pos,
-                vel = init_vel;
+        function draw(pos, vel) {
+            context.clearRect(0,0, canvas.width, canvas.height);
+            // Draw the galaxy center as a red circle
+            /*context.beginPath();
+            context.fillStyle="#ff0000";
+            context.arc(galaxy.x0, galaxy.y0, 5, 0,Math.PI*2,true);
+            context.closePath();
+            context.fill();*/
             
-            draw(init_pos, init_vel);
-            
-            function draw(pos, vel) {
-                context.clearRect(0,0, canvas.width, canvas.height);
-                // Draw the galaxy center as a red circle
-                /*context.beginPath();
-                context.fillStyle="#ff0000";
-                context.arc(galaxy.x0, galaxy.y0, 5, 0,Math.PI*2,true);
+            for (var ii=0; ii < pos.length; ii++) {
+                total_vel = vel[ii][0]*vel[ii][0] + vel[ii][1]*vel[ii][1];
+                context.beginPath();
+                context.fillStyle = "rgba(175,175,175,0.75)";
+                //context.fillStyle = "rgba(240, 110, 100, " + total_vel/2. + ")" //"#D4D3C8";
+                //context.fillStyle = color_scaler(total_vel);
+                context.arc(pos[ii][0],pos[ii][1], 1, 0,Math.PI*2,true);
                 context.closePath();
-                context.fill();*/
-                
-                for (var ii=0; ii < pos.length; ii++) {
-                    total_vel = vel[ii][0]*vel[ii][0] + vel[ii][1]*vel[ii][1]
-                    context.beginPath();
-                    context.fillStyle = "#D4D3C8";
-                    context.arc(pos[ii][0],pos[ii][1], 1, 0,Math.PI*2,true);
-                    context.closePath();
-                    context.fill();
-                }
+                context.fill();
             }
-            
-            function update() {
-                pos_vel = leapfrog_update(galaxy, pos, vel, dt=1.);
-                pos = pos_vel[0];
-                vel = pos_vel[1];
-                draw(pos, vel);
-            }
-            
-            //update();
-            //update();
-            setInterval(update, 10);
-            
-        })();
+        }
+        
+        function update() {
+            pos_vel = leapfrog_update(galaxy, pos, vel, dt=1.);
+            pos = pos_vel[0];
+            vel = pos_vel[1];
+            draw(pos, vel);
+        }
+        
+        //update();
+        //update();
+        //setInterval(update, 10);
+
     </script>
 </html>

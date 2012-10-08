@@ -32,9 +32,57 @@ function leapfrog_update(galaxy, positions, velocities, dt) {
     return [new_positions, new_velocities];
 }
 
+function StellarPopulation(positions, velocities) {
+    this.positions = positions;
+    this.velocities = velocities;
+    
+    this.update = function(galaxy, dt) {
+        /*  Uses the leapfrog method to integrate the positions of this stellar 
+            population forward by one timestep. Note that Leapfrog is only 
+            symplectic if the timestep remains constant.
+        */
+        
+        if (dt == undefined) {
+            dt = 0.1;
+        }
+        
+        var new_positions = new Array(),
+            new_velocities = new Array();
+    
+        for (var kk=0; kk < this.positions.length; kk++) {
+            // Get the old positions and velocities
+            position = this.positions[kk];
+            velocity = this.velocities[kk];
+            
+            // Compute the new positions
+            var ai = galaxy.acceleration(position);
+            var new_position = new Array();
+            for (var ii=0; ii < position.length; ii++) {
+                //console.log("pos: ii" + ii + "  " + position[ii] + velocity[ii]*dt + 0.5*ai[ii]*dt*dt);
+                new_position.push(position[ii] + velocity[ii]*dt + 0.5*ai[ii]*dt*dt);
+            }
+            
+            // Compute the new velocities
+            var new_ai = galaxy.acceleration(new_position);
+            var new_velocity = new Array();
+            for (var ii=0; ii < velocity.length; ii++) {
+                //console.log("vel: ii" + ii + "  " + velocity[ii] + 0.5*(ai[ii] + new_ai[ii])*dt);
+                new_velocity.push(velocity[ii] + 0.5*(ai[ii] + new_ai[ii])*dt);
+            }
+            
+            new_positions.push(new_position);
+            new_velocities.push(new_velocity);
+        }
+        
+        this.positions = new_positions;
+        this.velocities = new_velocities;
+    }
+}
+
 function Galaxy(x0, y0, size) {
 	this.x0 = x0;
 	this.y0 = y0;
+	this.populations = {};
 	
 	if (size == undefined) {
 	    size = 100;
@@ -55,7 +103,7 @@ function Galaxy(x0, y0, size) {
 		return [x,y];
 	}
 	
-	this.acceleration = function (xy, U, C) {
+	this.acceleration = function(xy, U, C) {
         if (U == undefined) {
             U = 1.;
         }
@@ -69,6 +117,25 @@ function Galaxy(x0, y0, size) {
             ydotdot = - (2 * (xy[1]-this.y0)) / (U*U*(xy[0]-this.x0)*(xy[0]-this.x0) + (xy[1]-this.y0)*(xy[1]-this.y0) + C*C*U*U);
         
         return [xdotdot, ydotdot];
+    }
+    
+    this.add_population = function(initial_position, initial_velocity, name) {
+        if (name == undefined) {
+            throw new Error("You must name this population of stars.");
+        }
+        
+        this.populations[name] = new StellarPopulation(initial_position, initial_velocity);
+    }
+    
+    this.update = function() {
+        /* Update each stellar population's positions and velocities */
+        
+        dt = 0.1;
+        for (var key in this.populations) {
+            if (this.populations.hasOwnProperty(key)) {
+                this.populations.update(this, dt);
+            }
+        }
     }
 } 
 
