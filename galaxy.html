@@ -15,6 +15,7 @@
                 color: rgb(180, 180, 180);
                 background: #333;
                 border-radius: 5px;
+                width: 20%;
             }
             
             #header table{
@@ -29,6 +30,12 @@
                 text-align: right;
                 font-size: 14pt;
                 color: rgb(200, 200, 200);
+            }
+            
+            #header table td.component_name {
+                text-align: center;
+                font-size: 16pt;
+                color: rgb(210, 210, 210);
             }
             
             #header h1 {
@@ -84,10 +91,15 @@
             <br/>
             
             <table cellpadding=5 cellspacing=10 width="100%">
+                <!-- Disk -->
+                <tr>
+                    <td class="component_name" colspan=2>Disk</td>
+                </tr>
                 <tr>
                     <td class="label">Num. of disk stars:</td>
                     <td><input type="text" id="num_disk_stars" placeholder="5000" size=10 /></td>
                 </tr>
+                
                 <tr>
                     <td class="label">Num. of bulge stars:</td>
                     <td><input type="text" id="num_bulge_stars" placeholder="1000" size=10 /></td>
