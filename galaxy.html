@@ -95,14 +95,26 @@
             
             <table cellpadding=5 cellspacing=10 width="100%">
                 <tr>
+                    <td colspan=2 class="label" style="text-align: center;">
+                        &Delta;t: <input type="text" id="dt" value="1" size=5 onChange="create_galaxy();" />
+                    </td>
+                </tr>
+                
+                <!-- Dark Matter Halo -->
+                <tr>
+                    <td class="component_name" colspan=2>Halo</td>
+                </tr>
+                <tr>
                     <td colspan=2 class="label" style="text-align: center;">U:
                         <input type="range" style="width: 100px;" id="log_U" min="0.707" max="1.08" value="0.8" step="0.01" onChange="$('#U_display').text($(this).val());"/>
                         <span id="U_display">0.800</span>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan=2 class="label" style="text-align: center;">
-                        &Delta;t: <input type="text" id="dt" value="1" size=5 onChange="create_galaxy();" />
+                    <td class="label">Velocity:</td>
+                    <td>
+                        v<sub>x</sub>: <input type="text" id="vx" value="0.0" size=8 /><br/>
+                        v<sub>y</sub>: <input type="text" id="vy" value="0.0" size=8 />
                     </td>
                 </tr>
                 
@@ -175,7 +187,9 @@
         
         function create_galaxy() {
             // Create a new Galaxy in the center of the screen
-            galaxy = new Galaxy(canvas.width/2., canvas.height/2., $("#log_U").val());
+            var galaxy_position = [canvas.width/2., canvas.height/2.],
+                galaxy_velocity = [$("#vx").val(), $("#vy").val()];
+            galaxy = new LogarithmicGalaxy(galaxy_position, galaxy_velocity);
             
             if ($('#add_disk').is(':checked')) {
                 galaxy.add_disk(number=parseInt($("#num_disk_stars").val()), 
