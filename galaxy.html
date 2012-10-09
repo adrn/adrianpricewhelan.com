@@ -96,7 +96,7 @@
             <table cellpadding=5 cellspacing=10 width="100%">
                 <tr>
                     <td colspan=2 class="label" style="text-align: center;">
-                        &Delta;t: <input type="text" id="dt" value="1" size=5 onChange="create_galaxy();" />
+                        &Delta;t: <input type="text" id="dt" value="1" size=5 />
                     </td>
                 </tr>
                 
@@ -124,7 +124,7 @@
                 
                 <!-- Disk -->
                 <tr>
-                    <td class="component_name" colspan=2>Disk&nbsp;&nbsp;<input type="checkbox" id="add_disk" checked=checked onChange="restart();" /></td>
+                    <td class="component_name" colspan=2>Disk&nbsp;&nbsp;<input type="checkbox" id="add_disk" checked=checked onChange="refresh();" /></td>
                 </tr>
                 <tr>
                     <td class="label"># of stars:</td>
@@ -145,7 +145,7 @@
                 
                 <!-- Bulge -->
                 <tr>
-                    <td class="component_name" colspan=2>Bulge&nbsp;&nbsp;<input type="checkbox" id="add_bulge" checked=checked onChange="restart();" /></td>
+                    <td class="component_name" colspan=2>Bulge&nbsp;&nbsp;<input type="checkbox" id="add_bulge" checked=checked onChange="refresh();" /></td>
                 </tr>
                 <tr>
                     <td class="label"># of stars:</td>
@@ -160,6 +160,7 @@
             <br/><br/>
             <input type="button" value="Start" onClick="start();" />
             <input type="button" value="Pause" onClick="stop();" />
+            <input type="button" value="Refresh" onClick="refresh();" />
             <input type="button" value="Restart" onClick="restart();" />
         </div>
         
@@ -181,9 +182,10 @@
         // Default disk radius is canvas.height/3.
         $("#disk_radius").val(parseInt(canvas.height/3.));
         
-        var interval;
-        var galaxy;
-        colors = {"bulge" : "rgba(217, 100, 100, 0.85)"};
+        var interval,
+            galaxy,
+            colors = {"bulge" : "rgba(217, 100, 100, 0.85)", "disk" : "rgba(215, 215, 215, 0.5)"},
+            dt = $('#dt').val();
         
         function create_galaxy() {
             // Create a new Galaxy in the center of the screen
@@ -205,14 +207,34 @@
         }
         
         function restart() {
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
             stop();
             create_galaxy();
             start();
         }
         
+        function refresh() {
+            stop();
+            var galaxy_velocity = [$("#vx").val(), $("#vy").val()];
+            galaxy.velocity = galaxy_velocity;
+            
+            if (!$('#add_disk').is(':checked')) {
+                colors["disk"] = "rgba(0,0,0,0.)";
+            } else {
+                colors["disk"] = "rgba(215, 215, 215, 0.5)";
+            }
+            if (!$('#add_bulge').is(':checked')) {
+                colors["bulge"] = "rgba(0,0,0,0.)";
+            } else {
+                colors["bulge"] = "rgba(217, 100, 100, 0.85)";
+            }
+            dt = $('#dt').val()
+            start();
+        }
+        
         function draw_update() {
             galaxy.draw(context, colors);
-            galaxy.update($('#dt').val());
+            galaxy.update(dt);
         }
         
         function start() {

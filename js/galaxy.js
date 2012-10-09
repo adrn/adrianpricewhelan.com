@@ -89,12 +89,9 @@ function StellarPopulation(args) {
     this.positions = args["positions"] || new Array();
     this.velocities = args["velocities"] || new Array();
     
-    this.draw = function(context) {
-        
-        if (this.color == undefined) {
+    this.draw = function(context, color) {
+        if (color == undefined) {
             color = "#ccc";
-        } else {
-            color = this.color;
         }
         
         var vel = this.velocities,
@@ -158,7 +155,7 @@ function Galaxy(position, velocity) {
         }
     }
     
-    this.draw = function(context) {
+    this.draw = function(context, colors) {
         /* Draw all stellar populations to the given context */
         
         // First clear the current state
@@ -167,7 +164,7 @@ function Galaxy(position, velocity) {
         // Loop over populations
         for (var key in this.populations) {
             if (this.populations.hasOwnProperty(key)) {
-                this.populations[key].draw(context);
+                this.populations[key].draw(context, colors[key]);
             }
         }
     }
