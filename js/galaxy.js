@@ -58,7 +58,7 @@ function StellarPopulation(positions, velocities) {
             total_vel = vel[ii][0]*vel[ii][0] + vel[ii][1]*vel[ii][1];
             context.beginPath();
             context.fillStyle = color;
-            context.arc(pos[ii][0],pos[ii][1], 1, 0,Math.PI*2,true);
+            context.arc(pos[ii][0],pos[ii][1], 1, 0, Math.PI*2,true);
             context.closePath();
             context.fill();
         }
@@ -136,8 +136,9 @@ function Galaxy(x0, y0, U) {
             init_pos.push(this.rphi_to_xy(init_r, init_phi));
             
             var mag_v = 1.4,
-                vx = -mag_v * Math.sin(init_phi) + (Math.random()-0.5)*Math.sqrt(dispersion/2.),
-                vy = mag_v * Math.cos(init_phi) + (Math.random()-0.5)*Math.sqrt(dispersion/2.);
+                vx = -mag_v * Math.sin(init_phi) + (Math.random()-0.5)*(dispersion/100.0/1.41),
+                vy = mag_v * Math.cos(init_phi) + (Math.random()-0.5)*(dispersion/100.0/1.41);
+                
             init_vel.push([vx, vy]);
             gg++;
         }
@@ -159,8 +160,9 @@ function Galaxy(x0, y0, U) {
             init_phi = Math.random()*2.*pi;
             init_pos.push(this.rphi_to_xy(init_r, init_phi));
             
-            var vx = Math.sqrt(1.4*Math.random()) - 0.7,
-                vy = Math.sqrt(1.4*Math.random()) - 0.7;
+            var mag_v = 0.6,
+                vx = -mag_v * Math.sin(init_phi) + (Math.random()-0.5)*(dispersion/100.0/1.41),
+                vy = mag_v * Math.cos(init_phi) + (Math.random()-0.5)*(dispersion/100.0/1.41);
             init_vel.push([vx, vy]);
             gg++;
         }

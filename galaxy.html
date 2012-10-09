@@ -15,7 +15,7 @@
                 color: rgb(180, 180, 180);
                 background: #333;
                 border-radius: 5px;
-                width: 20%;
+                width: 24%;
             }
             
             #header table{
@@ -23,6 +23,11 @@
             }
             
             #header table td {
+                font-size: 10pt;
+            }
+            
+            #U_display { 
+                color: rgb(150, 150, 150);
                 font-size: 10pt;
             }
             
@@ -36,6 +41,7 @@
                 text-align: center;
                 font-size: 16pt;
                 color: rgb(210, 210, 210);
+                border-bottom: 1px solid rgb(150, 150, 150);
             }
             
             #header h1 {
@@ -85,34 +91,63 @@
         <div id="header">
             <h1>Logarithmic Potential</h1><br/>
             <img src="images/potential.png" width="100%" /><br/><br/>
-            <hr size=1 width="70%"/><br/>
-            <input type="button" value="Start" onClick="start();" />
-            <input type="button" value="Pause" onClick="stop();" />
-            <br/>
+            <!--<hr size=1 width="70%"/>-->
             
             <table cellpadding=5 cellspacing=10 width="100%">
-                <!-- Disk -->
                 <tr>
-                    <td class="component_name" colspan=2>Disk</td>
-                </tr>
-                <tr>
-                    <td class="label">Num. of disk stars:</td>
-                    <td><input type="text" id="num_disk_stars" placeholder="5000" size=10 /></td>
-                </tr>
-                
-                <tr>
-                    <td class="label">Num. of bulge stars:</td>
-                    <td><input type="text" id="num_bulge_stars" placeholder="1000" size=10 /></td>
-                </tr>
-                <tr>
-                    <td class="label">U:</td>
-                    <td>
-                        <input type="range" style="width: 50px;" id="log_U" min="0.707" max="1.08" value="0.8" step="0.01" onChange="$('#U_display').text($(this).val());"/>
+                    <td colspan=2 class="label" style="text-align: center;">U:
+                        <input type="range" style="width: 100px;" id="log_U" min="0.707" max="1.08" value="0.8" step="0.01" onChange="$('#U_display').text($(this).val());"/>
                         <span id="U_display">0.800</span>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan=2 class="label" style="text-align: center;">
+                        &Delta;t: <input type="text" id="dt" value="1" size=5 onChange="create_galaxy();" />
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td colspan=2></td>
+                </tr>
+                
+                <!-- Disk -->
+                <tr>
+                    <td class="component_name" colspan=2>Disk&nbsp;&nbsp;<input type="checkbox" id="add_disk" checked=checked onChange="restart();" /></td>
+                </tr>
+                <tr>
+                    <td class="label"># of stars:</td>
+                    <td><input type="text" id="num_disk_stars" value="3000" size=10 /></td>
+                </tr>
+                <tr>
+                    <td class="label">Radius:</td>
+                    <td><input type="text" id="disk_radius" value="5" size=8 />&nbsp;px</td>
+                </tr>
+                <tr>
+                    <td class="label">Dispersion (%):</td>
+                    <td><input type="text" id="disk_dispersion" value="10" size=5 />&nbsp;%</td>
+                </tr>
+                
+                <tr>
+                    <td colspan=2></td>
+                </tr>
+                
+                <!-- Bulge -->
+                <tr>
+                    <td class="component_name" colspan=2>Bulge&nbsp;&nbsp;<input type="checkbox" id="add_bulge" checked=checked onChange="restart();" /></td>
+                </tr>
+                <tr>
+                    <td class="label"># of stars:</td>
+                    <td><input type="text" id="num_bulge_stars" value="500" size=10 /></td>
+                </tr>
+                <tr>
+                    <td class="label">Dispersion (%):</td>
+                    <td><input type="text" id="bulge_dispersion" value="100" size=5 />&nbsp;%</td>
+                </tr>
+
             </table>
-            <br/>
+            <br/><br/>
+            <input type="button" value="Start" onClick="start();" />
+            <input type="button" value="Pause" onClick="stop();" />
             <input type="button" value="Restart" onClick="restart();" />
         </div>
         
@@ -131,29 +166,39 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         
+        // Default disk radius is canvas.height/3.
+        $("#disk_radius").val(parseInt(canvas.height/3.));
+        
         var interval;
         var galaxy;
         colors = {"bulge" : "rgba(217, 100, 100, 0.85)"};
         
-        function create_galaxy(U, num_disk_stars, num_bulge_stars) {
+        function create_galaxy() {
             // Create a new Galaxy in the center of the screen
-            galaxy = new Galaxy(canvas.width/2., canvas.height/2., U);
-            galaxy.add_disk(number=num_disk_stars, radius=canvas.height/3., dispersion=0.1);
-            galaxy.add_bulge(number=num_bulge_stars, radius=canvas.height/10., dispersion=5.);
+            galaxy = new Galaxy(canvas.width/2., canvas.height/2., $("#log_U").val());
+            
+            if ($('#add_disk').is(':checked')) {
+                galaxy.add_disk(number=parseInt($("#num_disk_stars").val()), 
+                    radius=parseFloat($("#disk_radius").val()), 
+                    dispersion=parseFloat($("#disk_dispersion").val())); // % dispersion
+            }
+            
+            if ($('#add_bulge').is(':checked')) {
+                galaxy.add_bulge(number=parseInt($("#num_bulge_stars").val()), 
+                    radius=parseFloat($("#disk_radius").val())/8., 
+                    dispersion=parseFloat($("#bulge_dispersion").val()));
+            }
         }
         
         function restart() {
             stop();
-            U = $("#log_U").val();
-            num_disk = $("#num_disk_stars").val();
-            num_bulge = $("#num_bulge_stars").val();
-            create_galaxy(U, num_disk, num_bulge);
+            create_galaxy();
             start();
         }
         
         function draw_update() {
             galaxy.draw(context, colors);
-            galaxy.update(1.);
+            galaxy.update($('#dt').val());
         }
         
         function start() {
@@ -165,7 +210,7 @@
             window.clearInterval(interval);
         }
         
-        create_galaxy($("log_U").val(), 5000, 1000);
+        create_galaxy();
         start();
 
     </script>
