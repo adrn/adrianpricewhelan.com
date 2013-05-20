@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="ext/d3.v2.min.js"></script>
+        <script type="text/javascript" src="ext/jquery-1.6.1.min.js"></script>
+        
+        <style type="text/css">
+            html,body { 
+                background: #000;
+                margin: 0px; 
+            }
+            
+            #viz {
+                width: 900px;
+                height: 500px;
+            }
+            
+            circle.mouseFollower {
+                fill: #ccc;
+                fill-opacity: 0.0;
+                stroke: rgba(25,75,180,0.75);
+                stroke-width: 2px;
+            }
+            
+            #mcmcInitCircle {
+                fill: rgba(25,75,180,0.75);
+                fill-opacity: 0.4;
+                stroke: rgba(50,100,250,0.75);
+            }
+
+        </style>
+        
+    </head>
+    
+    <body>
+        <div id="viz"></div>
+        
+        <script type="text/javascript">
+            // - Add drop shadow to circle
+            // - Make mouse follower circle disappear when the mouse is off the SVG div
+            // - Set maximum and minimum size to the mouse follwer circle
+            
+            var w = $("#viz").width(),
+                h = $("#viz").height();
+            
+            // Set minimum and maximum size to the MCMC initialization circle
+            var minimum_r = 20,
+                maximum_r = 200;
+            
+            var x0 = 0.,
+                y0 = 0.,
+                x1 = 0.,
+                y1 = 0.;
+                
+            var mouseDown = 0;
+            
+            var svg = d3.select("#viz").append("svg")
+                .attr("width", w)
+                .attr("height", h)
+                .on("mousemove", vizMousemove)
+                .on("mousedown", vizMousedown)
+                .on("mouseup", vizMouseup);
+            
+            function vizMousedown() {
+                var coord = d3.svg.mouse(this);
+                x0 = coord[0];
+                y0 = coord[1];
+                mouseDown = 1;
+            };
+            
+            function vizMouseup() {
+                var coord = d3.svg.mouse(this);
+                x1 = coord[0];
+                y1 = coord[1];
+                mouseDown = 0;
+                
+                r = Math.sqrt(Math.pow(x1-x0,2) + Math.pow(y1-y0,2));
+                // Enforce maximum and minimum radius values
+                if (r < minimum_r || r > maximum_r) {
+                    return
+                }
+                d3.select("circle")
+                    .attr("r", r);
+            };
+            
+            function vizMousemove() {
+                var coord = d3.svg.mouse(this);
+                
+                if (d3.select("circle") == "") {
+                    svg.append("circle")
+                    .attr("r", 16)
+                    .attr("cx", coord[0])
+                    .attr("cy", coord[1])
+                    .attr("class", "mouseFollower");
+                }
+                
+                if (mouseDown == 1) {
+                    var r = Math.sqrt(Math.pow(coord[0]-x0,2) + Math.pow(coord[1]-y0,2));
+                    // Enforce maximum and minimum radius values
+                    if (r < minimum_r || r > maximum_r) {
+                        return
+                    }
+                    
+                    d3.select("circle")
+                        .attr("cx", coord[0])
+                        .attr("cy", coord[1])
+                        .attr("r", r);
+                } else {
+                    d3.select("circle")
+                        .attr("cx", coord[0])
+                        .attr("cy", coord[1]);
+                }
+            };
+            
+            var event = null;
+            d3.select(window).on("keydown", function() {
+                switch (d3.event.keyCode) {
+                    case 13: 
+                        var x = parseFloat(d3.select("circle")
+                            .attr("cx"));
+                        var y = parseFloat(d3.select("circle")
+                            .attr("cy"));
+                        var r = parseFloat(d3.select("circle")
+                            .attr("r"));
+                        
+                        if (d3.select("#mcmcInitCircle") == "") {
+                            svg.append("circle")
+                                .attr("id", "mcmcInitCircle");
+                        }
+                        
+                        svg.select("#mcmcInitCircle")
+                            .attr("r", r)
+                            .attr("cx", x)
+                            .attr("cy", y);
+                }
+            });
+                
+        </script>
+        
+    </body>
+</html>

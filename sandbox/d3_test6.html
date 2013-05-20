@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="ext/d3.v2.min.js"></script>
+        <script type="text/javascript" src="ext/jquery-1.6.1.min.js"></script>
+        
+        <style type="text/css">
+            html,body { 
+                background: #000;
+                margin: 0px; 
+            }
+            
+            #viz {
+                width: 900px;
+                height: 500px;
+            }
+            
+            circle {
+                fill: #ccc;
+                fill-opacity: 0.0;
+                stroke: #999;
+            }
+
+        </style>
+        
+    </head>
+    
+    <body>
+        <div id="viz"></div>
+        
+        <script type="text/javascript">
+            var w = $("#viz").width(),
+                h = $("#viz").height();
+            
+            //var y = d3.scale.ordinal().domain(d3.range(4)).rangePoints([20, h - 20]),
+            var t = 0;
+            
+            var svg = d3.select("#viz").append("svg")
+                .attr("width", w)
+                .attr("height", h);
+            
+            var x0 = w/2;
+            var y0 = h/2;
+            
+            var data = [{"x0" : x0/2, "y0" : y0/2},
+                        {"x0" : x0, "y0" : y0},
+                        {"x0" : 3*x0/2, "y0" : 3*y0/2}]
+            
+            var circle = svg.selectAll("circle")
+                .data(data)
+                .enter().append("circle")
+                .attr("r", 16)
+                .each(orbit(10));
+                
+            function orbit(r) {
+                t += 0.1;
+                
+                return function() {
+                    
+                    d3.select(this).transition()
+                        .duration(0)
+                        .attr("cx", this.__data__.x0 + r*Math.cos(t))
+                        .attr("cy", this.__data__.y0 + r*Math.sin(t))
+                        .each("end", orbit(r));
+                }
+            }
+            
+            /*
+              return function() {
+                d3.select(this).transition()
+                    .duration(t)
+                    .attr("cx", x1)
+                    .each("end", slide(x1, x0));
+              };
+            }*/
+                
+        </script>
+        
+    </body>
+</html>

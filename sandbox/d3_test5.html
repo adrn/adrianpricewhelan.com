@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="ext/d3.v2.min.js"></script>
+        <script type="text/javascript" src="ext/jquery-1.6.1.min.js"></script>
+        
+        <style type="text/css">
+            html,body { 
+                background: #000;
+                margin: 0px; 
+            }
+            
+            #viz {
+                width: 900px;
+                height: 500px;
+            }
+            
+            circle {
+                fill: #ccc;
+                fill-opacity: 0.0;
+                stroke: #999;
+            }
+
+        </style>
+        
+    </head>
+    
+    <body>
+        <div id="viz"></div>
+        
+        <script type="text/javascript">
+            var w = $("#viz").width(),
+                h = $("#viz").height();
+            
+            var y = d3.scale.ordinal().domain(d3.range(200)).rangePoints([20, h - 20]),
+                t = 2000;
+            
+            var svg = d3.select("#viz").append("svg")
+                .attr("width", w)
+                .attr("height", h);
+            
+            var circle = svg.selectAll("circle")
+                .data(y.domain())
+              .enter().append("svg:circle")
+                .attr("r", 16)
+                .attr("cx", 20)
+                .attr("cy", y)
+                .each(slide(20, w - 20));
+                
+            function slide(x0, x1) {
+                t -= 50;
+              
+                if (t < 0) {
+                    t = 2000;
+                }
+
+              return function() {
+                d3.select(this).transition()
+                    .duration(t)
+                    .attr("cx", x1)
+                    .each("end", slide(x1, x0));
+              };
+            }
+                
+        </script>
+        
+    </body>
+</html>

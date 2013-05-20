@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="ext/d3.v2.min.js"></script>
+        <script type="text/javascript" src="ext/jquery-1.6.1.min.js"></script>
+        
+        <style type="text/css">
+            #viz {
+                background-color: #000;
+                border: 1px solid #000;
+                width: 700px;
+                height: 700px;
+            }
+        </style>
+        
+    </head>
+    
+    <body>
+        <div id="viz"></div>
+        
+        <script type="text/javascript">
+            var sampleSVG = d3.select("#viz")
+                .append("svg")
+                .attr("width", $("#viz").width())
+                .attr("height", $("#viz").height());
+            
+            sampleSVG.append("circle")
+                .style("stroke", "black")
+                .style("fill", "white")
+                .attr("r", 50)
+                .attr("cx", $("#viz").width()/2)
+                .attr("cy", $("#viz").height()/2)
+                .on("mouseover", function() { d3.select(this).style("fill", "blue"); })
+                .on("mouseout", function() { d3.select(this).style("fill", "white"); })
+                .on("mousedown", function() { d3.select(this).style("fill", "red"); })
+                .on("mouseup", function() { d3.select(this).style("fill", "green"); })
+                
+        </script>
+        
+    </body>
+</html>
